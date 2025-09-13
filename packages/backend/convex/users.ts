@@ -12,8 +12,13 @@ export const getMany = query({
 export const add = mutation({
   args: {},
   handler: async (ctx) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (identity === null) {
+      throw new Error("Not authenticated")
+    }
+
     const userId = await ctx.db.insert("users", {
-      name: "Tommy",
+      name: identity?.name || "Unnamed User",
     })
 
     return userId
