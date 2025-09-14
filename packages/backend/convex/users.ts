@@ -13,9 +13,9 @@ export const add = mutation({
   args: {},
   handler: async (ctx) => {
     const identity = await ctx.auth.getUserIdentity();
-    // if (identity === null) {
-    //   throw new Error("Not authenticated")
-    // }
+    if (identity === null) {
+      throw new Error("Not authenticated")
+    }
 
     const orgId = identity.orgId as string
 
